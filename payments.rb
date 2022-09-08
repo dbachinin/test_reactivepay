@@ -2,14 +2,15 @@ require 'json'
 require './send_request'
 
 class Payments
-  def initialize(amount:, currency:)
+  def initialize(amount:, currency:, token: ENV['TOKEN'])
     @amount = amount
     @currency = currency
+    @token = token
   end
 
   def create
     uri = '/api/v1/payments'
-    result = SendRequest.request(params, uri: uri)
+    result = SendRequest.request(params, uri: uri, token: @token)
     if result.status == 200
       JSON.parse(result.body)
     else
