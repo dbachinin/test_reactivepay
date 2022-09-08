@@ -11,7 +11,7 @@ class Payments
   def create
     uri = '/api/v1/payments'
     result = SendRequest.request(params, uri: uri, token: @token)
-    JSON.parse(result.body) if result.status == 200
+    return JSON.parse(result.body) if result.status == 200
 
     error_body = JSON.parse(result.body)
     raise "Could not create payment with status #{result.status} #{error_body['errors']}"
